@@ -5,24 +5,27 @@ const { Schema } = mongoose;
 let Person;
 
 Person = mongoose.model('Person', new Schema({
-    name: String,
-    age: Number,
-    favoriteFoods: [String]
-  }))
+  name: String,
+  age: Number,
+  favoriteFoods: [String]
+}))
 
 const createAndSavePerson = (done) => {
   let user = new Person();
   user.name = "Yousif";
   user.age = 25;
   user.favoriteFoods = ["Food", "Mango"]
-  user.save(function(err, data) {
+  user.save(function (err, data) {
     if (err) return console.error(err);
     done(null, data)
   })
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, (err, data) => {
+    if (err) return console.error(err);
+    done(null, data);
+  });
 };
 
 const findPeopleByName = (personName, done) => {
